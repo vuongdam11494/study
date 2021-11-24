@@ -1,4 +1,4 @@
-package com.thpt.user.repository.mongo;
+package com.thpt.common.mongo;
 
 import com.mongodb.DB;
 import com.mongodb.DBCollection;

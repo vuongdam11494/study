@@ -1,6 +1,6 @@
 package com.thpt.user.request;
 
-import static com.thpt.user.utils.constant.KeyFields.UserKeyFields.*;
+import static com.thpt.common.constant.KeyFields.UserKeyFields.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;

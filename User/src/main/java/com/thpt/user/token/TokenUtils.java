@@ -1,6 +1,6 @@
 package com.thpt.user.token;
 
-import static com.thpt.user.utils.constant.KeyFields.UserKeyFields.ID;
+import static com.thpt.common.constant.KeyFields.UserKeyFields.ID;
 
 import java.util.Collections;
 import java.util.Date;

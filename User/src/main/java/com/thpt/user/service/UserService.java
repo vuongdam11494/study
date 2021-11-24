@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.thpt.common.utils.DateTimeUtils;
 import com.thpt.common.utils.ModelMapperUtils;
 import com.thpt.user.domain.User;
 import com.thpt.user.els.service.UserElsService;
@@ -31,6 +32,8 @@ public class UserService {
         User user = ModelMapperUtils.toObject(registerRequest, User.class);
         String encoderPass = encoder.encode(registerRequest.getPassword());
         user.setPassword(encoderPass);
+        user.setRegisterTime(DateTimeUtils.currentDateTime());
+        user.setLastLogIn(DateTimeUtils.currentDateTime());
         userRepository.insertUser(user);
         if (user.getUserId() != null) {
             userElsService.insertUser(user);

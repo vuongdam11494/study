@@ -1,17 +1,13 @@
 package com.thpt.user.repository;
 
-import static com.thpt.user.utils.constant.KeyFields.UserKeyFields.EMAIL;
-import static com.thpt.user.utils.constant.KeyFields.UserKeyFields.FULLNAME;
-import static com.thpt.user.utils.constant.KeyFields.UserKeyFields.GENDER;
-import static com.thpt.user.utils.constant.KeyFields.UserKeyFields.PASSWORD;
-import static com.thpt.user.utils.constant.KeyFields.UserKeyFields.PHONE;
-import static com.thpt.user.utils.constant.KeyFields.UserKeyFields.USERNAME;
+import static com.thpt.common.constant.KeyFields.UserKeyFields.*;
 
 import org.springframework.stereotype.Repository;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBObject;
+import com.thpt.common.mongo.AbstractEntiry;
 import com.thpt.user.domain.User;
 import com.thpt.user.repository.mongo.DBManager;
 

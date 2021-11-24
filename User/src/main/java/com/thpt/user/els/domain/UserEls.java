@@ -12,4 +12,6 @@ public class UserEls {
 	private String fullName;
 	private String phone;
 	private String email;
+	private Long lastLogIn;
+	private Long registerTime;
 }

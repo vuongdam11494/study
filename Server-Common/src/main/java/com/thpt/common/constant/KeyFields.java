@@ -29,4 +29,17 @@ public class KeyFields {
 			public static final String USER_RECEIVER = "user_receiver";
 		}
 	}
+	
+	public class FileKey {
+		public static final String ID = "_id";
+		public static final String DURATION = "duration";
+		public static final String TYPE = "type";
+		public static final String THUMBNAIL = "thumbnail";
+		public static final String SIZE = "size";
+		public static final String USER_ID = "user_id";
+		public static final String UPLOAD_TIME = "upload_time";
+		public static final String STATUS = "status";
+		public static final String FILE_PATH = "file_path";
+		public static final String THUMBNAIL_PATH = "thumbnail_path";
+	}
 }

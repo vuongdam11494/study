@@ -1,14 +1,14 @@
-package com.thpt.user.config;
+package com.thpt.file.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 import lombok.Getter;
 
-@Getter
 @Configuration
-public class MongoConfig {
+@Getter
+public class FileConfig {
 
-    @Value("${mongodb.uri}")
-    public String uri;
+	@Value("${local.path}")
+	private String path;
 }

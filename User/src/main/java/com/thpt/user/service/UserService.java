@@ -1,14 +1,13 @@
 package com.thpt.user.service;
 
-import static com.thpt.user.utils.constant.MessageResponse.UserMessage.*;
+import static com.thpt.user.utils.constant.MessageResponse.UserMessage.PASS_INCORRECT;
+import static com.thpt.user.utils.constant.MessageResponse.UserMessage.USERNAME_NOT_FOUND;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.thpt.common.config.TokenConfig;
 import com.thpt.common.utils.DateTimeUtils;
 import com.thpt.common.utils.ModelMapperUtils;
 import com.thpt.common.utils.token.JwtData;

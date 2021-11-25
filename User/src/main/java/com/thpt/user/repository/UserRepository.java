@@ -8,8 +8,8 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBObject;
 import com.thpt.common.mongo.AbstractEntiry;
+import com.thpt.common.mongo.DBManager;
 import com.thpt.user.domain.User;
-import com.thpt.user.repository.mongo.DBManager;
 
 @Repository
 public class UserRepository extends AbstractEntiry<User>{

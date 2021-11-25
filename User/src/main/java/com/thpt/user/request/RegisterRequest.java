@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class RegisterRequest {
     
+	private String id;
     @JsonProperty(USERNAME)
     private String username;
     @JsonProperty(PASSWORD)
@@ -24,5 +25,13 @@ public class RegisterRequest {
     private String phone;
     @JsonProperty(EMAIL)
     private String email;
+    @JsonProperty(AVATAR_ID)
+    private String avatarId;
+    @JsonProperty(AVATAR_URL)
+	private String avatarUrl;
+    @JsonProperty(THUMBNAIL_ID)
+	private String thumbnailId;
+    @JsonProperty(THUMBNAIL_URL)
+	private String thumbnailUrl;
     
 }

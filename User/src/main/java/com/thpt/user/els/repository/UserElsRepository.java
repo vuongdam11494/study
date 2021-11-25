@@ -8,6 +8,7 @@ import java.util.Map;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.IdsQueryBuilder;
@@ -35,6 +36,12 @@ public class UserElsRepository {
 		IndexRequest indexRequest = new IndexRequest(INDEX_NAME).id(userId);
 		indexRequest.source(userData);
 		elsWorkerPool.push(indexRequest);
+	}
+	
+	public void updateUser(Map<String, Object> updateData, String userId) {
+		UpdateRequest updateRequest = new UpdateRequest(INDEX_NAME, userId);
+		updateRequest.doc(updateData);
+		elsWorkerPool.push(updateRequest);
 	}
 	
 	public List<UserEls> searchByUserIds(List<String> ids) {

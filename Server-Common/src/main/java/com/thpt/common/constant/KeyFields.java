@@ -10,6 +10,10 @@ public class KeyFields {
 	    public static final String FULLNAME = "full_name";
 	    public static final String PHONE = "phone";
 	    public static final String EMAIL = "email";
+	    public static final String AVATAR_ID = "avatar_id";
+	    public static final String THUMBNAIL_ID = "thumbnail_id";
+	    public static final String AVATAR_URL = "avatar_url";
+	    public static final String THUMBNAIL_URL = "thumbnail_url";
 	    
 	    public static final int GENDER_MALE = 0;
 	    public static final int GENDER_FEMALE = 1;

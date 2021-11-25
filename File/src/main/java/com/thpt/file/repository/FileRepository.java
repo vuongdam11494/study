@@ -11,13 +11,16 @@ import static com.thpt.common.constant.KeyFields.FileKey.UPLOAD_TIME;
 import static com.thpt.common.constant.KeyFields.FileKey.USER_ID;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
+import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.thpt.common.mongo.AbstractEntiry;
 import com.thpt.common.mongo.DBManager;
@@ -43,6 +46,32 @@ public class FileRepository extends AbstractEntiry<File> {
 		if (dbObject != null) {
 			getCollection().insert(dbObject);
 		}
+	}
+
+	public List<File> findByUserId(String userId, String fileType) {
+		DBObject query = new BasicDBObject(USER_ID, userId);
+		if (fileType != null) {
+			query.put(TYPE, fileType);
+		}
+		DBCursor cursor = getCollection().find(query);
+		if (!cursor.hasNext()) {
+			return null;
+		}
+		List<DBObject> dbObjects = new ArrayList<DBObject>();
+		while (cursor.hasNext()) {
+			DBObject dbObject = cursor.next();
+			dbObjects.add(dbObject);
+		}
+		return objsToFiles(dbObjects);
+	}
+
+	public Map<String, List<File>> findByUserIds(List<String> userIds, String fileType) {
+		Map<String, List<File>> result = new HashMap<String, List<File>>();
+		for (String id : userIds) {
+			List<File> files = findByUserId(id, fileType);
+			result.put(id, files);
+		}
+		return result;
 	}
 
 	public File findById(String fileId) {
@@ -101,9 +130,9 @@ public class FileRepository extends AbstractEntiry<File> {
 		dbObject.put(DURATION, t.getDuration());
 		dbObject.put(FILE_PATH, t.getFilePath());
 		dbObject.put(SIZE, t.getSize());
-		dbObject.put(STATUS, t.getFileStatus());
+		dbObject.put(STATUS, t.getFileStatus().name());
 		dbObject.put(THUMBNAIL, t.getThumbnailId());
-		dbObject.put(TYPE, t.getFileType());
+		dbObject.put(TYPE, t.getFileType().name());
 		dbObject.put(UPLOAD_TIME, t.getUploadTime());
 		dbObject.put(USER_ID, t.getUserId());
 		dbObject.put(THUMBNAIL_PATH, t.getThumbnailPath());

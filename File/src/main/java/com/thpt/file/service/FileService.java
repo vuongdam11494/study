@@ -1,7 +1,10 @@
 package com.thpt.file.service;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import org.bson.types.ObjectId;
@@ -69,7 +72,22 @@ public class FileService {
 			return null;
 		}
 	}
-	
+
+	public List<FileUploadResponse> getByUserId(String userId, String fileType) {
+		List<File> files = fileRepository.findByUserId(userId, fileType);
+		List<FileUploadResponse> responses = files.stream().map(this::fileToFileUpload).collect(Collectors.toList());
+		return responses;
+	}
+
+	public Map<String, List<FileUploadResponse>> getByUserIds(List<String> userIds, String fileType) {
+		Map<String, List<File>> mapFiles = fileRepository.findByUserIds(userIds, fileType);
+		Map<String, List<FileUploadResponse>> mapResponses = new HashMap<String, List<FileUploadResponse>>();
+		for(Entry<String, List<File>> entry:mapFiles.entrySet()) {
+			mapResponses.put(entry.getKey(), entry.getValue().stream().map(this::fileToFileUpload).collect(Collectors.toList()));
+		}
+		return mapResponses;
+	}
+
 	public FileUploadResponse getByFileId(String fileId) {
 		File f = fileRepository.findById(fileId);
 		if (f == null) {

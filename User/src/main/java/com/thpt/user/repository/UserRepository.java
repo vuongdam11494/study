@@ -30,9 +30,15 @@ public class UserRepository extends AbstractEntiry<User>{
     		getCollection().insert(dbObject);
     		String userId = dbObject.get(ID).toString();
     		if(userId != null) {
-    			user.setUserId(userId);
+    			user.setId(userId);
     		}
     	}
+    }
+    
+    public void updateAvatarId(String userId,String avatarId) {
+    	DBObject query = new BasicDBObject(ID,userId);
+    	DBObject update = new BasicDBObject(AVATAR_ID, avatarId);
+    	getCollection().update(query,new BasicDBObject(SET,update));
     }
     
     public User findByUsername(String username) {
@@ -63,13 +69,14 @@ public class UserRepository extends AbstractEntiry<User>{
     	
     	BasicDBObject basicDBObject = (BasicDBObject)dbObject;
     	User user = User.builder()
-    			.userId(basicDBObject.getObjectId(ID).toHexString())
+    			.id(basicDBObject.getObjectId(ID).toHexString())
     			.username(basicDBObject.getString(USERNAME))
     			.password(basicDBObject.getString(PASSWORD))
     			.gender(basicDBObject.getInt(GENDER))
     			.fullName(basicDBObject.getString(FULLNAME))
     			.phone(basicDBObject.getString(PHONE))
     			.email(basicDBObject.getString(EMAIL))
+    			.avatarId(basicDBObject.getString(AVATAR_ID))
     			.build();
     	return user;
     }

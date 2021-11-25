@@ -1,13 +1,18 @@
 package com.thpt.user.service;
 
-import static com.thpt.common.constant.KeyFields.FriendShipKeyField.*;
+import static com.thpt.common.constant.KeyFields.FriendShipKeyField.STATUS_BLOCK;
+import static com.thpt.common.constant.KeyFields.FriendShipKeyField.STATUS_FRIEND;
+import static com.thpt.common.constant.KeyFields.FriendShipKeyField.STATUS_REQUEST;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.thpt.common.utils.RequestContext;
 import com.thpt.user.domain.FriendShip;
 import com.thpt.user.domain.FriendShipRelationship;
+import com.thpt.user.els.domain.UserEls;
+import com.thpt.user.els.repository.UserElsRepository;
 import com.thpt.user.repository.FriendRepository;
 import com.thpt.user.request.FriendShipResponseRequest;
 
@@ -18,11 +23,13 @@ import lombok.AllArgsConstructor;
 public class FriendService {
 
 	private final FriendRepository friendRepository;
+	private final UserElsRepository elsRepository;
 	
 	public void friendShipRequest(String userReceiverId) {
+		String userId = RequestContext.getUserId();
 		FriendShipRelationship friendShipRelationship = new FriendShipRelationship();
 		friendShipRelationship.setUserReceiver(userReceiverId);
-		friendShipRelationship.setUserRequest("");
+		friendShipRelationship.setUserRequest(userId);
 		FriendShip friendShip = new FriendShip();
 		friendShip.setFriendShipRelationship(friendShipRelationship);
 		friendShip.setStatus(STATUS_REQUEST);
@@ -31,15 +38,17 @@ public class FriendService {
 	
 	public void friendShipResponse(String userReceiverId,
 			FriendShipResponseRequest friendShipResponseRequest) {
+		String userId = RequestContext.getUserId();
 		if(friendShipResponseRequest.isStatus()) {
-			friendRepository.updateFriendShip("", userReceiverId, STATUS_FRIEND);
+			friendRepository.updateFriendShip(userId, userReceiverId, STATUS_FRIEND);
 		}else {
 			deleteFriendShip(userReceiverId);
 		}
 	}
 	
 	public void friendShipBlock(String userReceiverId) {
-		String friendShipId = friendRepository.findFriendShipId("", userReceiverId);
+		String userId = RequestContext.getUserId();
+		String friendShipId = friendRepository.findFriendShipId(userId, userReceiverId);
 		if(friendShipId != null) {
 			friendRepository.deleteFriendShip(friendShipId);
 		}
@@ -53,7 +62,8 @@ public class FriendService {
 	}
 	
 	public boolean deleteFriendShip(String userReceiverId) {
-		String friendShipId = friendRepository.findFriendShipId("", userReceiverId);
+		String userId = RequestContext.getUserId();
+		String friendShipId = friendRepository.findFriendShipId(userId, userReceiverId);
 		if(friendShipId == null) {
 			return false;
 		}
@@ -61,19 +71,31 @@ public class FriendService {
 		return true;
 	}
 	
-	public void listFriend() {
-		List<String> userIds = friendRepository.listFriend("");
+	public List<UserEls> listFriend() {
+		String userId = RequestContext.getUserId();
+		List<String> userIds = friendRepository.listFriend(userId);
+		List<UserEls> userEls = elsRepository.searchByUserIds(userIds);
+		return userEls;
 	}
 	
-	public void listBlock() {
-		List<String> userIds = friendRepository.listBlock("");
+	public List<UserEls> listBlock() {
+		String userId = RequestContext.getUserId();
+		List<String> userIds = friendRepository.listBlock(userId);
+		List<UserEls> userEls = elsRepository.searchByUserIds(userIds);
+		return userEls;
 	}
 	
-	public void listRequest() {
-		List<String> userIds = friendRepository.listRequestToMe("");
+	public List<UserEls> listRequest() {
+		String userId = RequestContext.getUserId();
+		List<String> userIds = friendRepository.listRequestToMe(userId);
+		List<UserEls> userEls = elsRepository.searchByUserIds(userIds);
+		return userEls;
 	}
 	
-	public void listWaitResponse() {
-		List<String> userIds = friendRepository.listWaitResponse("");
+	public List<UserEls> listWaitResponse() {
+		String userId = RequestContext.getUserId();
+		List<String> userIds = friendRepository.listWaitResponse(userId);
+		List<UserEls> userEls = elsRepository.searchByUserIds(userIds);
+		return userEls;
 	}
 }

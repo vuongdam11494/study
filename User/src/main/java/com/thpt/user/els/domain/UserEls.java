@@ -14,4 +14,6 @@ public class UserEls {
 	private String email;
 	private Long lastLogIn;
 	private Long registerTime;
+	private String avatarId;
+	private String thumbnailId;
 }

@@ -2,20 +2,23 @@ package com.thpt.user.service;
 
 import static com.thpt.user.utils.constant.MessageResponse.UserMessage.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.thpt.common.config.TokenConfig;
 import com.thpt.common.utils.DateTimeUtils;
 import com.thpt.common.utils.ModelMapperUtils;
+import com.thpt.common.utils.token.JwtData;
+import com.thpt.common.utils.token.TokenUtils;
 import com.thpt.user.domain.User;
 import com.thpt.user.els.service.UserElsService;
 import com.thpt.user.repository.UserRepository;
 import com.thpt.user.request.RegisterRequest;
 import com.thpt.user.request.TokenRequest;
 import com.thpt.user.response.TokenResponse;
-import com.thpt.user.token.TokenUtils;
 
 import lombok.AllArgsConstructor;
 
@@ -49,7 +52,9 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, PASS_INCORRECT);
         }
         TokenResponse tokenResponse = new TokenResponse();
-        String jwtToken = tokenUtils.generateToken(user);
+        JwtData jwtData = new JwtData();
+        jwtData.setUserId(user.getUserId());
+        String jwtToken = tokenUtils.generateToken(jwtData);
         tokenResponse.setJwt(jwtToken);
         return tokenResponse;
     }

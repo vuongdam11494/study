@@ -20,4 +20,6 @@ public class User {
 	private String email;
 	private Long lastLogIn;
 	private Long registerTime;
+	private String avatarId;
+	private String thumbnailId;
 }

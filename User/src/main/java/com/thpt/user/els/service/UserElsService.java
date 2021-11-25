@@ -28,4 +28,5 @@ public class UserElsService {
 		Map<String, Object> mapData = ModelMapperUtils.toObject(userEls, Map.class);
 		return mapData;
 	}
+	
 }
